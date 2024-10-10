@@ -25,7 +25,6 @@ function AdminLoginPage(props) {
       });
   };
 
-  // Enter 키를 누르면 로그인 처리
   const handleKeyPress = (event) => {
     if (event.key === "Enter") {
       handleSigninClick();
@@ -45,7 +44,7 @@ function AdminLoginPage(props) {
             placeholder={"아이디"}
             value={username}
             onChange={userNameChange}
-            onKeyPress={handleKeyPress} // Enter 키 이벤트 추가
+            onKeyPress={handleKeyPress} 
           />
           <AuthPageInput
             type={"password"}
@@ -53,7 +52,7 @@ function AdminLoginPage(props) {
             placeholder={"비밀번호"}
             value={password}
             onChange={passwordChange}
-            onKeyPress={handleKeyPress} // Enter 키 이벤트 추가
+            onKeyPress={handleKeyPress} 
           />
           <button css={s.signinButton} onClick={handleSigninClick}>
             로그인
