@@ -6,19 +6,22 @@ export const loginLayout = css`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 `;
 
 export const loginContainer = css`
   box-sizing: border-box;
   width: 30%;
   height: 80%;
-  /* background-color: #dbdbdb; */
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  /* border: 1px solid #dbdbdb; */
-  border-radius: 10px;
+  
+  @media (max-width: 700px) {
+    width: 100%;
+    height: 100%;
+  }
 `;
 
 export const header = css`
