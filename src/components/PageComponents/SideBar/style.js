@@ -46,7 +46,7 @@ export const overlay = css`
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(231, 231, 231, 0.548);
+  background-color: rgba(230, 230, 230, 0.418);
   z-index: 98;
 `;
 
@@ -57,6 +57,7 @@ export const layout = css`
   left: 0;
   background-color: #fff;
   z-index: 99;
+  cursor: default;
 
   @media (max-width: 700px) {
     width: 80%;
