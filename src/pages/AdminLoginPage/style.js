@@ -17,7 +17,7 @@ export const loginContainer = css`
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
-  
+
   @media (max-width: 700px) {
     width: 100%;
     height: 100%;
@@ -27,7 +27,6 @@ export const loginContainer = css`
 export const header = css`
   width: 100%;
   height: 23%;
-  /* background-color: #0099ff; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -43,7 +42,6 @@ export const header = css`
 export const input = css`
   width: 100%;
   height: 60%;
-  /* background-color: #757575; */
   display: flex;
   flex-direction: column;
   align-items: center;

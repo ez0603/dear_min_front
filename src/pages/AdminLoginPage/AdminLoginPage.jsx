@@ -60,10 +60,10 @@ function AdminLoginPage(props) {
               로그인
             </button>
             <div css={s.search}>
-              <Link to={"/auth/search/adminName"} css={s.link}>
+              <Link to={"/auth/search/username"} css={s.link}>
                 아이디 찾기
               </Link>
-              <Link to={"/auth/search/adminPassword"} css={s.link}>
+              <Link to={"/auth/search/password"} css={s.link}>
                 비밀번호 찾기
               </Link>
             </div>

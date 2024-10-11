@@ -4,7 +4,7 @@ export const layout = css`
   box-sizing: border-box;
   width: 100vw;
   height: 100vh;
-  background-color: #f7f7fb;
+  background-color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
