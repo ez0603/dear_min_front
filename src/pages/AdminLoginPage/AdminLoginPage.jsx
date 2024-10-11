@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import AuthPageInput from "../../components/AuthPage/AuthPageInput/AuthPageInput";
 import { useInput } from "../../hooks/useInput";
 import { adminSigninRequest } from "../../apis/api/signin";
-import AdminPageLayout from "../../components/PageComponents/AdminPageLayout/AdminPageLayout";
+import PageLayout from "../../components/PageComponents/PageLayout/PageLayout";
 
 function AdminLoginPage(props) {
   const [username, userNameChange] = useInput();
@@ -19,7 +19,7 @@ function AdminLoginPage(props) {
       .then((response) => {
         const accessToken = response.data;
         localStorage.setItem("AccessToken", accessToken);
-        window.location.replace("/admin/main");
+        window.location.replace("/admin/home");
       })
       .catch((error) => {
         alert(error.response.data);
@@ -33,7 +33,7 @@ function AdminLoginPage(props) {
   };
 
   return (
-    <AdminPageLayout>
+    <PageLayout>
       <div css={s.loginLayout}>
         <div css={s.loginContainer}>
           <div css={s.header}>
@@ -70,7 +70,7 @@ function AdminLoginPage(props) {
           </div>
         </div>
       </div>
-    </AdminPageLayout>
+    </PageLayout>
   );
 }
 
