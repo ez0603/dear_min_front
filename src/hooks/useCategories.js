@@ -11,6 +11,7 @@ const useCategories = () => {
         response.data.map((category) => ({
           value: category.categoryId,
           label: category.categoryName,
+          img: category.categoryImg,
         }))
       );
     },

@@ -58,6 +58,7 @@ export const layout = css`
   background-color: #fff;
   z-index: 99;
   cursor: default;
+  overflow-y: auto;
 
   @media (max-width: 700px) {
     width: 80%;
