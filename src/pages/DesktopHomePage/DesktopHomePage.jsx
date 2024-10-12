@@ -2,12 +2,12 @@
 // import * as s from "./style";
 import AdminPageLayout from "../../components/PageComponents/AdminPageLayout/AdminPageLayout";
 
-function MainPage(props) {
+function DesktopHomePage(props) {
   return (
     <AdminPageLayout>
-      <div>fdsf</div>
+      <div>fsdfsdfsdfsd</div>
     </AdminPageLayout>
   );
 }
 
-export default MainPage;
+export default DesktopHomePage;

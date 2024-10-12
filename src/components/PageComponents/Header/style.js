@@ -37,13 +37,16 @@ export const category = css`
   display: flex;
   align-items: center;
   background-color: aqua;
-  overflow-x: hidden;
+  overflow-x: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none; 
   white-space: nowrap;
 
   @media (max-width: 700px) {
     overflow-x: auto;
     white-space: nowrap;
   }
+ 
 `;
 
 export const list = css`
@@ -117,5 +120,5 @@ export const left = css`
 `;
 
 export const right = css`
-  right: 10px;
+  right: 3%;
 `;
