@@ -5,15 +5,15 @@ import * as s from "./style";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaAngleDown } from "react-icons/fa6";
 
-function SideBar({ isOpen, toggleSidebar }) {
+function MobileSideBar({ isOpen, toggleSidebar }) {
   const sidebarRef = useRef(null);
-  const [activeDropdown, setActiveDropdown] = useState(null); 
+  const [activeDropdown, setActiveDropdown] = useState(null);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {
         toggleSidebar();
-        setActiveDropdown(null); 
+        setActiveDropdown(null);
       }
     };
 
@@ -39,7 +39,6 @@ function SideBar({ isOpen, toggleSidebar }) {
         </button>
         <div>
           <ul css={s.menuList}>
-
             <li css={s.menuItem}>
               <div css={s.link} onClick={() => toggleDropdown("sales")}>
                 <span>매출 현황</span>
@@ -126,7 +125,6 @@ function SideBar({ isOpen, toggleSidebar }) {
                 </ul>
               )}
             </li>
-
           </ul>
         </div>
       </div>
@@ -134,4 +132,4 @@ function SideBar({ isOpen, toggleSidebar }) {
   );
 }
 
-export default SideBar;
+export default MobileSideBar;

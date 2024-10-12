@@ -1,12 +1,12 @@
 /** @jsxImportSource @emotion/react */
 import { useNavigate } from "react-router-dom";
-import useCategories from "../../../hooks/useCategories";
+import useCategories from "../../../../hooks/useCategories";
 import * as s from "./style";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
 
-function Header({ toggleSidebar }) {
+function DesktopHeader({ toggleSidebar }) {
   const categories = useCategories();
   const navigate = useNavigate();
   const categoryListRef = useRef(null);
@@ -84,4 +84,4 @@ function Header({ toggleSidebar }) {
   );
 }
 
-export default Header;
+export default DesktopHeader;
