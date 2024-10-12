@@ -52,7 +52,7 @@ function DesktopHeader({ toggleSidebar }) {
       <div css={s.categoryLayout}>
         {showArrows && (
           <button
-            css={[s.arrowButton, s.left]} // 배열 형태로 전달
+            css={[s.arrowButton, s.left]} 
             onClick={scrollLeft}
           >
             <IoIosArrowBack size={24} />
@@ -73,7 +73,7 @@ function DesktopHeader({ toggleSidebar }) {
         </div>
         {showArrows && (
           <button
-            css={[s.arrowButton, s.right]} // 배열 형태로 전달
+            css={[s.arrowButton, s.right]}
             onClick={scrollRight}
           >
             <IoIosArrowForward size={24} />

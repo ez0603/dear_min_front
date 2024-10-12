@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import useCategories from "../../../../hooks/useCategories"; // useCategories 가져오기
 import * as s from "./style";
 import { IoIosArrowBack } from "react-icons/io";
 import { FaAngleDown } from "react-icons/fa6";
@@ -8,6 +9,7 @@ import { FaAngleDown } from "react-icons/fa6";
 function MobileSideBar({ isOpen, toggleSidebar }) {
   const sidebarRef = useRef(null);
   const [activeDropdown, setActiveDropdown] = useState(null);
+  const categories = useCategories(); // 카테고리 데이터 가져오기
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -32,7 +34,7 @@ function MobileSideBar({ isOpen, toggleSidebar }) {
 
   return (
     <>
-      {isOpen && <div css={s.overlay} onClick={toggleSidebar} />}{" "}
+      {isOpen && <div css={s.overlay} onClick={toggleSidebar} />}
       <div ref={sidebarRef} css={[s.layout, isOpen ? s.open : s.closed]}>
         <button css={s.closeButton} onClick={toggleSidebar}>
           <IoIosArrowBack size={30} />
@@ -122,6 +124,28 @@ function MobileSideBar({ isOpen, toggleSidebar }) {
                       상품 수정
                     </Link>
                   </li>
+                </ul>
+              )}
+            </li>
+
+            <li css={s.menuItem}>
+              <div css={s.link} onClick={() => toggleDropdown("categories")}>
+                <span>카테고리</span>
+                <FaAngleDown size={25} />
+              </div>
+              {activeDropdown === "categories" && (
+                <ul css={s.dropdown}>
+                  {categories.map((category) => (
+                    <li key={category.value} css={s.dropdownItem}>
+                      <Link
+                        to={`/home?category=${category.value}`}
+                        css={s.dropLink}
+                        onClick={() => setActiveDropdown(null)}
+                      >
+                        {category.label}
+                      </Link>
+                    </li>
+                  ))}
                 </ul>
               )}
             </li>

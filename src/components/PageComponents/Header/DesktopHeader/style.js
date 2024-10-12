@@ -41,11 +41,6 @@ export const category = css`
   scrollbar-width: none;
   -ms-overflow-style: none; 
   white-space: nowrap;
-
-  @media (max-width: 700px) {
-    overflow-x: auto;
-    white-space: nowrap;
-  }
  
 `;
 
@@ -57,14 +52,6 @@ export const list = css`
   gap: 50px;
   padding: 0;
   margin: 0;
-
-  li {
-    cursor: pointer;
-  }
-
-  @media (max-width: 700px) {
-    flex-wrap: nowrap;
-  }
 
   li {
     cursor: pointer;
@@ -105,14 +92,6 @@ export const arrowButton = css`
   padding: 5px;
   z-index: 99;
   background-color: transparent;
-
-  @media (min-width: 701px) {
-    display: block;
-  }
-
-  @media (max-width: 700px) {
-    display: none;
-  }
 `;
 
 export const left = css`
