@@ -2,46 +2,72 @@ import { css } from "@emotion/react";
 
 export const layout = css`
   width: 100%;
-  height: 200px;
+  height: 250px;
   position: fixed;
   top: 0;
   z-index: 98;
   cursor: default;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const topLayout = css`
+  width: 100%;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const menuButton = css`
+  position: absolute;
+  top: -30px;
+  left: 40px;
+  transform: translateY(-100%);
   box-sizing: border-box;
   border: none;
   background-color: transparent;
-  top: 15px;
-  left: 15px;
-  position: relative;
   color: #333;
   cursor: pointer;
 `;
 
-export const categoryLayout = css`
-  width: 100%;
-  position: relative;
-  top: 40px;
+export const logoLayout = css`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: orange;
+
+  img {
+    cursor: pointer;
+  }
+`;
+
+export const categoryLayout = css`
+  box-sizing: border-box;
+  width: 100%;
+  position: relative;
+  top: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dbdbdb;
+  padding: 5px 0;
 `;
 
 export const category = css`
-  width: 90%;
+  width: 80%;
   height: 50px;
   position: relative;
   display: flex;
   align-items: center;
-  background-color: aqua;
   overflow-x: auto;
   scrollbar-width: none;
-  -ms-overflow-style: none; 
+  -ms-overflow-style: none;
   white-space: nowrap;
- 
 `;
 
 export const list = css`
@@ -52,6 +78,7 @@ export const list = css`
   gap: 50px;
   padding: 0;
   margin: 0;
+  font-weight: 300;
 
   li {
     cursor: pointer;
@@ -62,22 +89,11 @@ export const list = css`
 export const listItem = css`
   padding: 10px;
   position: relative;
+  transition: background-color 0.3s ease-in-out;
 
-  ::after {
-    content: "";
-    position: absolute;
-    width: 0;
-    height: 2px;
-    bottom: 0;
-    left: 0;
-    background-color: #dbdbdb;
-    visibility: hidden;
-    transition: all 0.3s ease-in-out;
-  }
-
-  :hover::after {
-    visibility: visible;
-    width: 100%;
+  :hover {
+    color: #7e6d5a;
+    font-weight: 700;
   }
 `;
 
@@ -87,17 +103,21 @@ export const arrowButton = css`
   transform: translateY(-50%);
   background-color: rgba(0, 0, 0, 0.5);
   border: none;
-  color: white;
+  color: #ccc;
   cursor: pointer;
   padding: 5px;
   z-index: 99;
   background-color: transparent;
+
+  :hover {
+    color: #7e6d5a;
+  }
 `;
 
 export const left = css`
-  left: 3%;
+  left: 6%;
 `;
 
 export const right = css`
-  right: 3%;
+  right: 6%;
 `;

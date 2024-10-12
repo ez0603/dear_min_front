@@ -11,8 +11,6 @@ function MobileSideBar({ isOpen, toggleSidebar }) {
   const [activeDropdown, setActiveDropdown] = useState(null);
   const categories = useCategories();
 
-  console.log(categories);
-
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (sidebarRef.current && !sidebarRef.current.contains(event.target)) {

@@ -5,6 +5,7 @@ import * as s from "./style";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
 import { useEffect, useRef, useState } from "react";
+import logo from "../../../../assets/img/desk_logo.png";
 
 function DesktopHeader({ toggleSidebar }) {
   const categories = useCategories();
@@ -14,6 +15,10 @@ function DesktopHeader({ toggleSidebar }) {
 
   const handleCategoryClick = (categoryId) => {
     navigate(`/home?category=${categoryId}`);
+  };
+
+  const handleLogoClick = () => {
+    navigate("/admin/home");
   };
 
   const scrollLeft = () => {
@@ -46,15 +51,17 @@ function DesktopHeader({ toggleSidebar }) {
 
   return (
     <div css={s.layout}>
-      <button onClick={toggleSidebar} css={s.menuButton}>
-        <IoMenu size={35} />
-      </button>
+      <div css={s.topLayout}>
+        <button onClick={toggleSidebar} css={s.menuButton}>
+          <IoMenu size={35} />
+        </button>
+        <div css={s.logoLayout} onClick={handleLogoClick}>
+          <img src={logo} alt="Logo" />
+        </div>
+      </div>
       <div css={s.categoryLayout}>
         {showArrows && (
-          <button
-            css={[s.arrowButton, s.left]} 
-            onClick={scrollLeft}
-          >
+          <button css={[s.arrowButton, s.left]} onClick={scrollLeft}>
             <IoIosArrowBack size={24} />
           </button>
         )}
@@ -72,10 +79,7 @@ function DesktopHeader({ toggleSidebar }) {
           </ul>
         </div>
         {showArrows && (
-          <button
-            css={[s.arrowButton, s.right]}
-            onClick={scrollRight}
-          >
+          <button css={[s.arrowButton, s.right]} onClick={scrollRight}>
             <IoIosArrowForward size={24} />
           </button>
         )}

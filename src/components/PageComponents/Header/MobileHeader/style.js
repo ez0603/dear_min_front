@@ -7,16 +7,32 @@ export const layout = css`
   top: 0;
   z-index: 98;
   cursor: default;
-  background-color: orange;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 export const menuButton = css`
+  position: absolute;
+  top: 35px;
+  left: 20px;
   box-sizing: border-box;
   border: none;
   background-color: transparent;
-  top: 20px;
-  left: 20px;
-  position: relative;
   color: #333;
   cursor: pointer;
+`;
+
+export const logoLayout = css`
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    width: 80%;
+    cursor: pointer;
+  }
 `;
