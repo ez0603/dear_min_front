@@ -12,6 +12,7 @@ function DesktopHeader({ toggleSidebar }) {
   const navigate = useNavigate();
   const categoryListRef = useRef(null);
   const [showArrows, setShowArrows] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
 
   const handleCategoryClick = (categoryId) => {
     navigate(`/home?category=${categoryId}`);
@@ -49,17 +50,29 @@ function DesktopHeader({ toggleSidebar }) {
     };
   }, [categories]);
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 1);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
+
   return (
-    <div css={s.layout}>
+    <div css={s.layout(isScrolled)}>
       <div css={s.topLayout}>
-        <button onClick={toggleSidebar} css={s.menuButton}>
+        <button onClick={toggleSidebar} css={s.menuButton(isScrolled)}>
           <IoMenu size={35} />
         </button>
-        <div css={s.logoLayout} onClick={handleLogoClick}>
+        <div css={s.logoLayout(isScrolled)} onClick={handleLogoClick}>
           <img src={logo} alt="Logo" />
         </div>
       </div>
-      <div css={s.categoryLayout}>
+      <div css={s.categoryLayout(isScrolled)}>
         {showArrows && (
           <button css={[s.arrowButton, s.left]} onClick={scrollLeft}>
             <IoIosArrowBack size={24} />

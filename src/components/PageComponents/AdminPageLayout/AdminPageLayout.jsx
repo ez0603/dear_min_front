@@ -28,7 +28,6 @@ function AdminPageLayout({ children }) {
 
   return (
     <div css={s.layout}>
-      <div css={s.container}>
         {isMobile ? (
           <>
             <MobileHeader toggleSidebar={toggleSidebar} />
@@ -46,6 +45,7 @@ function AdminPageLayout({ children }) {
             />
           </>
         )}
+          <div css={s.container}>
         {children}
       </div>
     </div>

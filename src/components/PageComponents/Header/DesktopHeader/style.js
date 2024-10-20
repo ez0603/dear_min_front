@@ -1,16 +1,20 @@
 import { css } from "@emotion/react";
 
-export const layout = css`
+export const layout = (isScrolled) => css`
   width: 100%;
-  height: 250px;
+  height: ${isScrolled ? "80px" : "250px"};
   position: fixed;
   top: 0;
+  left: 0;
   z-index: 98;
   cursor: default;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  background-color: #fff;
+  box-shadow: ${isScrolled ? "0 4px 8px rgba(0, 0, 0, 0.1)" : "none"};
+  transition: all 0.3s ease;
 `;
 
 export const topLayout = css`
@@ -21,9 +25,9 @@ export const topLayout = css`
   justify-content: center;
 `;
 
-export const menuButton = css`
+export const menuButton = (isScrolled) => css`
   position: absolute;
-  top: -30px;
+  top: ${isScrolled ? "50px" : "-30px"};
   left: 40px;
   transform: translateY(-100%);
   box-sizing: border-box;
@@ -31,31 +35,43 @@ export const menuButton = css`
   background-color: transparent;
   color: #333;
   cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
 `;
 
-export const logoLayout = css`
+export const logoLayout = (isScrolled) => css`
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  display: flex;
+  display: ${isScrolled ? "none" : "flex"};
   align-items: center;
   justify-content: center;
 
   img {
     cursor: pointer;
   }
+  transition: all 0.3s ease;
 `;
 
-export const categoryLayout = css`
+export const categoryLayout = (isScrolled) => css`
   box-sizing: border-box;
   width: 100%;
   position: relative;
-  top: 80px;
+  top: ${isScrolled ? "0px" : "95px"};
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 1px solid #dbdbdb;
+  border: ${isScrolled ? "none" : "1px solid #dbdbdb"};
+  border-left: none;
+  border-right: none;
   padding: 5px 0;
+  transition: all 0.3s ease;
+
+  @media (max-width: 1200px) and (min-width: 700px) {
+    width: 85%;
+    border: none;
+    left: 10px;
+  }
 `;
 
 export const category = css`
@@ -75,6 +91,7 @@ export const list = css`
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   gap: 50px;
   padding: 0;
   margin: 0;
@@ -115,9 +132,17 @@ export const arrowButton = css`
 `;
 
 export const left = css`
-  left: 6%;
+  left: 7%;
+
+  @media (max-width: 1200px) and (min-width: 700px) {
+    left: 5%;
+  }
 `;
 
 export const right = css`
   right: 6%;
+
+  @media (max-width: 1200px) and (min-width: 700px) {
+    right: 3%;
+  }
 `;
