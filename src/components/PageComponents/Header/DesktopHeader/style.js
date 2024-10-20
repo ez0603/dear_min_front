@@ -92,7 +92,7 @@ export const list = css`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: 50px;
+  gap: clamp(30px, 10vw, 50px);
   padding: 0;
   margin: 0;
   font-weight: 300;

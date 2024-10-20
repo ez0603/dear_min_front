@@ -22,15 +22,33 @@ function DesktopHeader({ toggleSidebar }) {
     navigate("/admin/home");
   };
 
+  const scrollSmooth = (element, distance, duration) => {
+    const start = element.scrollLeft;
+    let startTime = null;
+
+    const step = (timestamp) => {
+      if (!startTime) startTime = timestamp;
+      const progress = timestamp - startTime;
+      const progressRatio = Math.min(progress / duration, 1);
+      element.scrollLeft = start + distance * progressRatio;
+
+      if (progress < duration) {
+        window.requestAnimationFrame(step);
+      }
+    };
+
+    window.requestAnimationFrame(step);
+  };
+
   const scrollLeft = () => {
     if (categoryListRef.current) {
-      categoryListRef.current.scrollBy({ left: -200, behavior: "smooth" });
+      scrollSmooth(categoryListRef.current, -200, 300);
     }
   };
 
   const scrollRight = () => {
     if (categoryListRef.current) {
-      categoryListRef.current.scrollBy({ left: 200, behavior: "smooth" });
+      scrollSmooth(categoryListRef.current, 200, 300);
     }
   };
 

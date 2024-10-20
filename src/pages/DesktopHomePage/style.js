@@ -3,8 +3,7 @@ import { css } from "@emotion/react";
 export const layout = (isScrolled) => css`
   box-sizing: border-box;
   width: 100%;
-  height:
-  ${isScrolled ? "calc(100% - 80px" : "calc(100% - 250px"};
+  height: ${isScrolled ? "calc(100% - 80px" : "calc(100% - 250px"};
   background-color: #fff;
   display: flex;
   align-items: center;
