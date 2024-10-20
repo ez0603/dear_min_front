@@ -55,6 +55,7 @@ export const layout = css`
   height: 100%;
   position: fixed;
   left: 0;
+  top: 0;
   background-color: #fff;
   z-index: 99;
   cursor: default;

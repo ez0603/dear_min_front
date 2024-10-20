@@ -10,6 +10,7 @@ export const layout = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-color: #fff;
 `;
 
 export const menuButton = css`
