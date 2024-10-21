@@ -53,15 +53,14 @@ function AdminPageLayout({ children }) {
           <DesktopHeader
             toggleSidebar={toggleSidebar}
             isScrolled={isScrolled}
-          />{" "}
-          {/* 스크롤 여부 전달 */}
+          />
           <DesktopSideBar
             isOpen={isSidebarOpen}
             toggleSidebar={toggleSidebar}
           />
         </>
       )}
-      <div css={s.container}>{children}</div>
+      <div css={s.container(isScrolled, isMobile)}>{children}</div>
     </div>
   );
 }
