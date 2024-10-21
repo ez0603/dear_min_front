@@ -1,9 +1,9 @@
 import { css } from "@emotion/react";
 
-export const layout = (isScrolled) => css`
+export const layout =  css`
   box-sizing: border-box;
   width: 100%;
-  height: ${isScrolled ? "calc(100% - 80px)" : "calc(100% - 250px)"};
+  height:100%;
   background-color: #fff;
   display: flex;
   align-items: center;
@@ -20,10 +20,9 @@ export const container = css`
   background-color: #fff;
 `;
 
-export const background = (isScrolled) => css`
+export const background =  css`
   width: 100%;
   height: 100%;
-  margin-top: ${isScrolled ? "80px" : "250px"};
   display: flex;
   align-items: center;
   justify-content: center;

@@ -15,7 +15,7 @@ function DesktopHeader({ toggleSidebar }) {
   const [isScrolled, setIsScrolled] = useState(false);
 
   const handleCategoryClick = (categoryId) => {
-    navigate(`/home?category=${categoryId}`);
+    navigate(`/admin/category/${categoryId}`);
   };
 
   const handleLogoClick = () => {
