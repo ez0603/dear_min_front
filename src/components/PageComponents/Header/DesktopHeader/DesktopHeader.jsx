@@ -91,29 +91,31 @@ function DesktopHeader({ toggleSidebar }) {
         </div>
       </div>
       <div css={s.categoryLayout(isScrolled)}>
-        {showArrows && (
-          <button css={[s.arrowButton, s.left]} onClick={scrollLeft}>
-            <IoIosArrowBack size={24} />
-          </button>
-        )}
-        <div css={s.category} ref={categoryListRef}>
-          <ul css={s.list}>
-            {categories.map((category) => (
-              <li
-                key={category.value}
-                css={s.listItem}
-                onClick={() => handleCategoryClick(category.value)}
-              >
-                {category.label}
-              </li>
-            ))}
-          </ul>
+        <div css={s.categoryContain(isScrolled)}>
+          {showArrows && (
+            <button css={[s.arrowButton, s.left]} onClick={scrollLeft}>
+              <IoIosArrowBack size={24} />
+            </button>
+          )}
+          <div css={s.category} ref={categoryListRef}>
+            <ul css={s.list}>
+              {categories.map((category) => (
+                <li
+                  key={category.value}
+                  css={s.listItem}
+                  onClick={() => handleCategoryClick(category.value)}
+                >
+                  {category.label}
+                </li>
+              ))}
+            </ul>
+          </div>
+          {showArrows && (
+            <button css={[s.arrowButton, s.right]} onClick={scrollRight}>
+              <IoIosArrowForward size={24} />
+            </button>
+          )}
         </div>
-        {showArrows && (
-          <button css={[s.arrowButton, s.right]} onClick={scrollRight}>
-            <IoIosArrowForward size={24} />
-          </button>
-        )}
       </div>
     </div>
   );

@@ -68,14 +68,28 @@ export const categoryLayout = (isScrolled) => css`
   transition: all 0.3s ease;
 
   @media (max-width: 1200px) and (min-width: 700px) {
-    width: 85%;
+    width: 100%;
     border: none;
-    left: 10px;
+  }
+`;
+
+export const categoryContain = (isScrolled) => css`
+  width: 95%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: all 0.3s ease;
+  left: ${isScrolled ? "5px" : "0px"};
+
+  @media (max-width: 1200px) and (min-width: 700px) {
+    width: ${isScrolled ? "80%" : "100%"};
   }
 `;
 
 export const category = css`
-  width: 80%;
+  width: 83%;
   height: 50px;
   position: relative;
   display: flex;
@@ -92,7 +106,7 @@ export const list = css`
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  gap: clamp(30px, 10vw, 50px);
+  gap: clamp(30px, 10vw, 40px);
   padding: 0;
   margin: 0;
   font-weight: 300;
@@ -132,10 +146,10 @@ export const arrowButton = css`
 `;
 
 export const left = css`
-  left: 7%;
+  left: 6%;
 
   @media (max-width: 1200px) and (min-width: 700px) {
-    left: 5%;
+    left: 3%;
   }
 `;
 

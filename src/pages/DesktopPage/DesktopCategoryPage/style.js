@@ -32,7 +32,8 @@ export const productContain = css`
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 50px;
-  width: 100%;
+  width: 90%;
+  background-color: aqua;
   padding: 0 30px;
   justify-items: center;
 `;
