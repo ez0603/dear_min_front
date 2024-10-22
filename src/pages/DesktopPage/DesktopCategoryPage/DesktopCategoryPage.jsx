@@ -1,12 +1,17 @@
 /** @jsxImportSource @emotion/react */
 import * as s from "./style";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import useGetProducts from "../../../hooks/useGetProduct";
 import AdminPageLayout from "../../../components/PageComponents/AdminPageLayout/AdminPageLayout";
 
 function DesktopCategoryPage(props) {
   const { categoryId } = useParams();
   const { products } = useGetProducts(categoryId);
+  const navigate = useNavigate();
+
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`); 
+  };
 
   return (
     <AdminPageLayout>
@@ -18,8 +23,11 @@ function DesktopCategoryPage(props) {
             <div css={s.productLayout}>
               <div css={s.productContain}>
                 {products.map((product) => (
-                  <div key={product.id} css={s.productCard}>
-                    <div css={s.imageContainer}>
+                  <div key={product.productId} css={s.productCard}>
+                    <div
+                      css={s.imageContainer}
+                      onClick={() => handleProductClick(product.productId)} 
+                    >
                       <img src={product.productImg} alt={product.productName} />
                       <p>수정하기</p>
                     </div>

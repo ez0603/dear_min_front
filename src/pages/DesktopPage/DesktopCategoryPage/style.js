@@ -19,6 +19,7 @@ export const container = css`
   justify-content: center;
   padding: clamp(10px, 4vw, 30px) 0;
   overflow: hidden;
+  padding-bottom: 50px;
 
   p {
     padding: 30px;
@@ -93,7 +94,7 @@ export const imageContainer = css`
     left: 50%;
     transform: translate(-50%, -50%);
     color: white;
-    font-size: 20px;
+    font-size: clamp(18px, 1vw, 20px);
     font-weight: 700;
     margin: 0;
     opacity: 0;

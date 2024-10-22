@@ -64,35 +64,6 @@ function MobileSideBar({ isOpen, toggleSidebar }) {
             </li>
 
             <li css={s.menuItem}>
-              <div css={s.link} onClick={() => toggleDropdown("sales")}>
-                <span>매출 현황</span>
-                <FaAngleDown size={25} />
-              </div>
-              {activeDropdown === "sales" && (
-                <ul css={s.dropdown}>
-                  <li css={s.dropdownItem}>
-                    <Link
-                      to="/admin/sales"
-                      css={[s.dropLink]}
-                      onClick={() => setActiveDropdown(null)}
-                    >
-                      전체 매출
-                    </Link>
-                  </li>
-                  <li css={s.dropdownItem}>
-                    <Link
-                      to="/admin/sales/monthly"
-                      css={[s.dropLink]}
-                      onClick={() => setActiveDropdown(null)}
-                    >
-                      이번달 매출
-                    </Link>
-                  </li>
-                </ul>
-              )}
-            </li>
-
-            <li css={s.menuItem}>
               <div css={s.link} onClick={() => toggleDropdown("productAdd")}>
                 <span>상품 등록</span>
                 <FaAngleDown size={25} />
