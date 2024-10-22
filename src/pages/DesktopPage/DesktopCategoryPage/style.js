@@ -7,6 +7,7 @@ export const layout = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  cursor: default;
 `;
 
 export const container = css`
@@ -18,6 +19,10 @@ export const container = css`
   justify-content: center;
   padding: clamp(10px, 4vw, 30px) 0;
   overflow: hidden;
+
+  p {
+    padding: 30px;
+  }
 `;
 
 export const productLayout = css`
@@ -33,7 +38,6 @@ export const productContain = css`
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
   gap: 50px;
   width: 90%;
-  background-color: aqua;
   padding: 0 30px;
   justify-items: center;
 `;
@@ -49,16 +53,55 @@ export const productCard = css`
   border-radius: 8px;
   text-align: center;
 
+  h1 {
+    margin: 5px 0;
+    font-size: clamp(20px, 3vw, 25px);
+  }
+
+  h2 {
+    margin: 7px 0;
+    font-size: clamp(15px, 3vw, 20px);
+  }
+
+  h3 {
+    margin: 5px 0;
+    font-size: clamp(8px, 3vw, 15px);
+  }
+`;
+
+export const imageContainer = css`
+  position: relative;
+  width: 100%;
+
   img {
     width: 100%;
     height: auto;
     border-radius: 8px;
     margin-bottom: 10px;
+    transition: opacity 0.3s ease, filter 0.3s ease;
+
+    :hover {
+      cursor: pointer;
+      opacity: 0.8;
+      filter: brightness(50%);
+    }
   }
 
-  h1,
-  h2,
-  h3 {
-    margin: 5px 0;
+  p {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    margin: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+  }
+
+  :hover p {
+    opacity: 1;
   }
 `;

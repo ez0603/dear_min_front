@@ -13,17 +13,20 @@ function DesktopCategoryPage(props) {
       <div css={s.layout}>
         <div css={s.container}>
           {products.length === 0 ? (
-            <p>No products found for this category.</p>
+            <p>상품이 존재하지 않습니다.</p>
           ) : (
             <div css={s.productLayout}>
               <div css={s.productContain}>
                 {products.map((product) => (
                   <div key={product.id} css={s.productCard}>
-                    <img src={product.productImg} alt={product.productName} />
+                    <div css={s.imageContainer}>
+                      <img src={product.productImg} alt={product.productName} />
+                      <p>수정하기</p>
+                    </div>
                     <h1>{product.productName}</h1>
-                    <h2>{product.productPrice}</h2>
-                    <h3>{product.costPrice}</h3>
-                    <h3>{product.productCount}</h3>
+                    <h2>{product.productPrice} 원</h2>
+                    <h3>단가 {product.costPrice} 원</h3>
+                    <h2>{product.productCount} 개</h2>
                   </div>
                 ))}
               </div>
