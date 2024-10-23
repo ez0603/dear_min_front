@@ -7,3 +7,4 @@ export const searchAdminnameByEmailRequest = async (data) => {
 export const searchAdminPasswordByEmailRequest = async (data) => {
     return await instance.post("/mail/send/temporary/admin/password", data);
 }
+

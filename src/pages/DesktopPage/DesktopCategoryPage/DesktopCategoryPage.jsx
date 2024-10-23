@@ -10,7 +10,7 @@ function DesktopCategoryPage(props) {
   const navigate = useNavigate();
 
   const handleProductClick = (productId) => {
-    navigate(`/product/${productId}`); 
+    navigate(`/admin/product/${productId}`); 
   };
 
   return (

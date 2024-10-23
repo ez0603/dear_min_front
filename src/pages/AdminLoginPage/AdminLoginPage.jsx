@@ -19,7 +19,7 @@ function AdminLoginPage(props) {
       .then((response) => {
         const accessToken = response.data;
         localStorage.setItem("AccessToken", accessToken);
-        window.location.replace("/admin/home");
+        navigate("/admin/home");
       })
       .catch((error) => {
         alert(error.response.data);
