@@ -1,19 +1,22 @@
 /** @jsxImportSource @emotion/react */
+import * as s from "./style";
 import { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import useGetProductsDetail from "../../../hooks/useGetProductDetail";
 import ImageUpload from "../../../components/ProductComponents/ImageUpload/ImageUpload";
-import { updateProduct } from "../../../apis/api/product"; // updateProduct API import
+import { deleteProduct, updateProduct } from "../../../apis/api/product";
 import useCategories from "../../../hooks/useCategories";
 import CategorySelect from "../../../components/ProductComponents/CategorySelect/CategorySelect";
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Firebase Storage import
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../../apis/firebase/firebaseConfig";
+import AdminPageLayout from "../../../components/PageComponents/AdminPageLayout/AdminPageLayout";
 
 function DesktopProductDetailPage() {
   const { productId } = useParams();
+  const navigate = useNavigate();
   const { productDetail, isLoading } = useGetProductsDetail(productId);
   const [imageUrl, setImageUrl] = useState(productDetail?.productImg || "");
-  const [localFile, setLocalFile] = useState(null); // File to upload state
+  const [localFile, setLocalFile] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   const categories = useCategories();
 
@@ -40,6 +43,21 @@ function DesktopProductDetailPage() {
     setIsEditing(true);
   };
 
+  const handleDelete = async () => {
+    if (window.confirm("정말로 이 상품을 삭제하시겠습니까?")) {
+      try {
+        await deleteProduct(productId);
+        alert("상품이 삭제되었습니다.");
+
+        const categoryId = productDetail?.categoryId;
+        navigate(`/admin/category/${categoryId}`); // useNavigate로 카테고리 페이지로 이동
+      } catch (error) {
+        console.error("상품 삭제 실패", error);
+        alert("상품 삭제에 실패했습니다.");
+      }
+    }
+  };
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setEditValues((prevValues) => ({
@@ -54,7 +72,7 @@ function DesktopProductDetailPage() {
 
   const handleCancel = () => {
     setIsEditing(false);
-    setImageUrl(productDetail.productImg); // Reset to original image
+    setImageUrl(productDetail.productImg);
   };
 
   const handleSave = async () => {
@@ -101,6 +119,7 @@ function DesktopProductDetailPage() {
         productCount: productDetail.productCount,
         productImg: productDetail.productImg,
       });
+      setImageUrl(productDetail.productImg);
     }
   }, [productDetail]);
 
@@ -113,83 +132,87 @@ function DesktopProductDetailPage() {
   }
 
   return (
-    <div>
-      {productDetail ? (
-        <>
-          {!isEditing ? (
-            <>
-              <button onClick={handleEdit}>Edit</button>
-              <h1>{productDetail.productName}</h1>
-              <img
-                src={productDetail.productImg}
-                alt={productDetail.productName}
-              />
-              <p>가격: {productDetail.productPrice} 원</p>
-              <p>단가: {productDetail.costPrice} 원</p>
-              <p>수량: {productDetail.productCount} 개</p>
-              <p>Category: {productDetail.categoryName}</p>
-            </>
-          ) : (
-            <>
-              <h1>
-                <input
-                  type="text"
-                  name="productName"
-                  value={editValues.productName}
-                  onChange={handleInputChange}
+    <AdminPageLayout>
+      <div css={s.layout}>
+        {productDetail ? (
+          <>
+            {!isEditing ? (
+              <>
+                <button onClick={handleEdit}>수정</button>
+                <button onClick={handleDelete}>삭제</button>
+                <h1>{productDetail.productName}</h1>
+                <img
+                  src={productDetail.productImg}
+                  alt={productDetail.productName}
                 />
-              </h1>
-              <ImageUpload
-                initialImage={imageUrl}
-                onImageUpload={handleImageUpload}
-                isEditing={isEditing}
-              />
-              <p>
-                가격:
-                <input
-                  type="number"
-                  name="productPrice"
-                  value={editValues.productPrice}
-                  onChange={handleInputChange}
+                <p>가격: {productDetail.productPrice} 원</p>
+                <p>단가: {productDetail.costPrice} 원</p>
+                <p>수량: {productDetail.productCount} 개</p>
+                <p>Category: {productDetail.categoryName}</p>
+              </>
+            ) : (
+              <div css={s.editLayout}>
+                <h1>
+                  <input
+                    type="text"
+                    name="productName"
+                    value={editValues.productName}
+                    onChange={handleInputChange}
+                  />
+                </h1>
+                <ImageUpload
+                  initialImage={imageUrl}
+                  onImageUpload={handleImageUpload}
+                  isEditing={isEditing}
                 />
-                원
-              </p>
-              <p>
-                단가 :
-                <input
-                  type="number"
-                  name="costPrice"
-                  value={editValues.costPrice}
-                  onChange={handleInputChange}
-                />
-                원
-              </p>
-              <p>
-                수량:
-                <input
-                  type="number"
-                  name="productCount"
-                  value={editValues.productCount}
-                  onChange={handleInputChange}
-                />
-                개
-              </p>
+                <p>
+                  가격:
+                  <input
+                    type="number"
+                    name="productPrice"
+                    value={editValues.productPrice}
+                    onChange={handleInputChange}
+                  />
+                  원
+                </p>
+                <p>
+                  단가 :
+                  <input
+                    type="number"
+                    name="costPrice"
+                    value={editValues.costPrice}
+                    onChange={handleInputChange}
+                  />
+                  원
+                </p>
+                <p>
+                  수량:
+                  <input
+                    type="number"
+                    name="productCount"
+                    value={editValues.productCount}
+                    onChange={handleInputChange}
+                  />
+                  개
+                </p>
 
-              <CategorySelect
-                categories={categories}
-                selectedCategory={selectedCategory}
-                onSelect={handleCategorySelect}
-              />
-
-              <button onClick={handleSave}>Save</button>
-              <button onClick={handleCancel}>Cancel</button>
-            </>
-          )}
-        </>
-      ) : (
-        <div>로딩중 ...</div>
-      )}
-    </div>
+                <CategorySelect
+                  categories={categories}
+                  selectedCategory={selectedCategory}
+                  onSelect={handleCategorySelect}
+                />
+                <div css={s.editButton}>
+                  <button onClick={handleSave}>Save</button>
+                  <button onClick={handleCancel}>Cancel</button>
+                </div>
+              </div>
+            )}
+          </>
+        ) : (
+          <div>로딩중 ...</div>
+        )}
+      </div>
+    </AdminPageLayout>
   );
 }
 

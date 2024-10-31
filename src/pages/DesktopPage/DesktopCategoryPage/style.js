@@ -76,7 +76,7 @@ export const imageContainer = css`
 
   img {
     width: 100%;
-    height: auto;
+    height: clamp(250px, 10vw, 350px);
     border-radius: 8px;
     margin-bottom: 10px;
     transition: opacity 0.3s ease, filter 0.3s ease;

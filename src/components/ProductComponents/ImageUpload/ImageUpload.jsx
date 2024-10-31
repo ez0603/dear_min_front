@@ -35,7 +35,7 @@ const ImageUpload = ({ initialImage, onImageUpload, isEditing }) => {
             ref={fileInputRef}
             css={s.fileInput}
             onChange={handleImageChange}
-            onClick={(e) => e.stopPropagation()} // 클릭 이벤트 버블링 방지
+            onClick={(e) => e.stopPropagation()} 
           />
           <div css={s.overlay}>
             <span>클릭하여 이미지를 선택해주세요</span>

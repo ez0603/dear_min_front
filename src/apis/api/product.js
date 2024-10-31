@@ -22,3 +22,7 @@ export const getProductCategoryRequest = async (categoryId) => {
 export const updateProduct = async (data) => {
   return await instance.put("/product/products", data);
 };
+
+export const deleteProduct = async (productId) => {
+  return await instance.delete(`/product/products?productId=${productId}`);
+};
