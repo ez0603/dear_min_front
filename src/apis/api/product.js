@@ -30,3 +30,7 @@ export const deleteProduct = async (productId) => {
 export const searchAllOptionTitleRequest = async () => {
   return await instance.get("/product/option/titles");
 };
+
+export const searchOptionRequest = async (optionTitleId) => {
+  return await instance.get(`/product/option?optionTitleId=${optionTitleId}`);
+};

@@ -8,7 +8,6 @@ function useOptionTitles(props) {
   useQuery(["optionTitleQuery"], searchAllOptionTitleRequest, {
     onSuccess: (response) => {
       const { optionTitlesId, optionTitleNames } = response.data;
-      console.log(response.data);
 	  setoptionTitles(
 		optionTitlesId.map((id, index) => ({
 		  value: id,
