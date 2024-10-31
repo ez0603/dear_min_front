@@ -26,3 +26,7 @@ export const updateProduct = async (data) => {
 export const deleteProduct = async (productId) => {
   return await instance.delete(`/product/products?productId=${productId}`);
 };
+
+export const searchAllOptionTitleRequest = async () => {
+  return await instance.get("/product/option/titles");
+};

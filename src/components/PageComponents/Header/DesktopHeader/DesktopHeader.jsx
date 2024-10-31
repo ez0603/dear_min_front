@@ -1,6 +1,7 @@
 /** @jsxImportSource @emotion/react */
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import useCategories from "../../../../hooks/useCategories";
+import useOptionTitles from "../../../../hooks/useOptionTitles";
 import * as s from "./style";
 import { IoMenu } from "react-icons/io5";
 import { IoIosArrowBack, IoIosArrowForward } from "react-icons/io";
@@ -9,13 +10,18 @@ import logo from "../../../../assets/img/desk_logo.png";
 
 function DesktopHeader({ toggleSidebar }) {
   const categories = useCategories();
+  const optionTitles = useOptionTitles();
   const navigate = useNavigate();
+  const location = useLocation();
   const categoryListRef = useRef(null);
   const [showArrows, setShowArrows] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  const handleCategoryClick = (categoryId) => {
-    navigate(`/admin/category/${categoryId}`);
+  const isOptionPage = location.pathname.startsWith("/admin/option");
+
+  const handleItemClick = (id) => {
+    const targetPath = isOptionPage ? `/admin/option/${id}` : `/admin/category/${id}`;
+    navigate(targetPath);
   };
 
   const handleLogoClick = () => {
@@ -66,7 +72,7 @@ function DesktopHeader({ toggleSidebar }) {
     return () => {
       window.removeEventListener("resize", handleResize);
     };
-  }, [categories]);
+  }, [categories, optionTitles]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -99,13 +105,13 @@ function DesktopHeader({ toggleSidebar }) {
           )}
           <div css={s.category} ref={categoryListRef}>
             <ul css={s.list}>
-              {categories.map((category) => (
+              {(isOptionPage ? optionTitles : categories).map((item) => (
                 <li
-                  key={category.value}
+                  key={item.value}
                   css={s.listItem}
-                  onClick={() => handleCategoryClick(category.value)}
+                  onClick={() => handleItemClick(item.value)}
                 >
-                  {category.label}
+                  {item.label}
                 </li>
               ))}
             </ul>

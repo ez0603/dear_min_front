@@ -77,7 +77,7 @@ function DesktopSideBar({ isOpen, toggleSidebar }) {
                 <ul css={s.dropdown}>
                   <li css={s.dropdownItem}>
                     <Link
-                      to="/admin/product"
+                      to="/admin/option"
                       css={[s.dropLink]}
                       onClick={() => setActiveDropdown(null)}
                     >

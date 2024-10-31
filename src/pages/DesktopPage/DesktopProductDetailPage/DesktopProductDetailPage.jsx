@@ -152,6 +152,10 @@ function DesktopProductDetailPage() {
               </>
             ) : (
               <div css={s.editLayout}>
+                <div css={s.editButton}>
+                  <button onClick={handleSave}>Save</button>
+                  <button onClick={handleCancel}>Cancel</button>
+                </div>
                 <h1>
                   <input
                     type="text"
@@ -195,16 +199,11 @@ function DesktopProductDetailPage() {
                   />
                   개
                 </p>
-
                 <CategorySelect
                   categories={categories}
                   selectedCategory={selectedCategory}
                   onSelect={handleCategorySelect}
                 />
-                <div css={s.editButton}>
-                  <button onClick={handleSave}>Save</button>
-                  <button onClick={handleCancel}>Cancel</button>
-                </div>
               </div>
             )}
           </>
