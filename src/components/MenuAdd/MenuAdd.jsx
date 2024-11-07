@@ -45,23 +45,39 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
     }
   };
 
-  const handleQuantityChange = (quantity) => {
-    setQuantity(quantity);
-    if (selectedOptionPrice !== null) {
-      setDividedPrice(Math.floor(selectedOptionPrice / quantity));
+  const handleQuantityChange = (newQuantity) => {
+    setQuantity(newQuantity);
+
+    if (selectedOptionPrice !== null && newQuantity > 0) {
+      setDividedPrice(Math.floor(selectedOptionPrice / newQuantity));
+    } else {
+      setDividedPrice(0);
     }
   };
 
   const handleAddOption = () => {
     if (optionId !== 0 && selectedOptionPrice !== null) {
-      const optionName = option.optionNames[option.optionNameIds.indexOf(optionId)];
+      if (!quantity || quantity <= 0) {
+        alert("수량을 입력해주세요.");
+        return;
+      }
+
+      const optionName =
+        option.optionNames[option.optionNameIds.indexOf(optionId)];
       setAddedOptions((prevOptions) => [
         ...prevOptions,
-        { id: optionId, name: optionName, price: selectedOptionPrice, quantity, dividedPrice }
+        {
+          id: optionId,
+          name: optionName,
+          price: selectedOptionPrice,
+          quantity,
+          dividedPrice,
+        },
       ]);
+
       setOptionId(0);
       setSelectedOptionPrice(null);
-      setQuantity(1);
+      setQuantity("");
       setDividedPrice(0);
       setCostPrice((prevCost) => prevCost + dividedPrice);
     }
@@ -109,43 +125,49 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
         ))}
       </select>
 
-      {optionTitleId !== 0 && option && option.optionNameIds && option.optionNames && (
-        <div>
-          <select
-            value={optionId}
-            onChange={(e) => handleOptionChange(parseInt(e.target.value, 10))}
-          >
-            <option value={0}>옵션 선택</option>
-            {option.optionNameIds.map((id, index) => (
-              <option key={id} value={id}>
-                {option.optionNames[index]}
-              </option>
-            ))}
-          </select>
+      {optionTitleId !== 0 &&
+        option &&
+        option.optionNameIds &&
+        option.optionNames && (
+          <div>
+            <select
+              value={optionId}
+              onChange={(e) => handleOptionChange(parseInt(e.target.value, 10))}
+            >
+              <option value={0}>옵션 선택</option>
+              {option.optionNameIds.map((id, index) => (
+                <option key={id} value={id}>
+                  {option.optionNames[index]}
+                </option>
+              ))}
+            </select>
 
-          {selectedOptionPrice !== null && (
-            <div>
-              <p>선택된 옵션 가격: {selectedOptionPrice} 원</p>
-              <input
-                type="number"
-                min="1"
-                placeholder="수량"
-                value={quantity}
-                onChange={(e) => handleQuantityChange(parseInt(e.target.value, 10))}
-              />
-              <p>나눠진 가격: {dividedPrice} 원</p>
-              <button type="button" onClick={handleAddOption}>
-                옵션 추가
-              </button>
-            </div>
-          )}
-        </div>
-      )}
+            {selectedOptionPrice !== null && (
+              <div>
+                <p>선택된 옵션 가격: {selectedOptionPrice} 원</p>
+                <input
+                  type="number"
+                  min="1"
+                  placeholder="수량"
+                  value={quantity}
+                  onChange={(e) =>
+                    handleQuantityChange(parseInt(e.target.value, 10))
+                  }
+                />
+                <p>나눠진 가격: {dividedPrice} 원</p>
+                <button type="button" onClick={handleAddOption}>
+                  옵션 추가
+                </button>
+              </div>
+            )}
+          </div>
+        )}
 
       <ul>
         {addedOptions.map((opt, index) => (
           <li key={index}>
-            {opt.name} - {opt.price} 원 / 수량: {opt.quantity} / 나눠진 가격: {opt.dividedPrice} 원
+            {opt.name} - {opt.price} 원 / 수량: {opt.quantity} / 나눠진 가격:{" "}
+            {opt.dividedPrice} 원
           </li>
         ))}
       </ul>

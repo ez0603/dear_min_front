@@ -34,3 +34,7 @@ export const searchAllOptionTitleRequest = async () => {
 export const searchOptionRequest = async (optionTitleId) => {
   return await instance.get(`/product/option?optionTitleId=${optionTitleId}`);
 };
+
+export const registerProductMaterial = async (data) => {
+  return await instance.post("/product/material", data);
+};
