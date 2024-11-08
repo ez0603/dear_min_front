@@ -5,7 +5,6 @@ export const getProductRequest = async () => {
 };
 
 export const registerProduct = async (data) => {
-  console.log(data);
   return await instance.post("/product/products", data);
 };
 

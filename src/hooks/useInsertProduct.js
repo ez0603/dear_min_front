@@ -1,4 +1,3 @@
-/** @jsxImportSource @emotion/react */
 import { registerProduct } from "../apis/api/product";
 
 function useInsertProduct() {
@@ -12,7 +11,6 @@ function useInsertProduct() {
     categoryName
   ) => {
     try {
-      // 필수 필드가 비어 있는지 확인
       if (!productName) {
         alert("상품명을 입력해주세요.");
         return;
@@ -38,7 +36,6 @@ function useInsertProduct() {
         return;
       }
 
-      // 모든 필드가 채워졌다면, 등록 데이터 생성 및 API 호출
       const params = {
         categoryId,
         categoryName,
@@ -48,13 +45,14 @@ function useInsertProduct() {
         costPrice,
         productCount,
       };
-      console.log("등록 전 데이터 확인:", params);
 
-      await registerProduct(params);
+      const response = await registerProduct(params);
+      const productId = response.data.productId;
       alert("메뉴 추가가 완료되었습니다.");
-      window.location.reload();
+      return productId;
     } catch (error) {
       console.error("상품 추가 실패:", error);
+      throw error;
     }
   };
 

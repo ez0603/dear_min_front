@@ -37,7 +37,7 @@ function AdminLoginPage(props) {
       <div css={s.loginLayout}>
         <div css={s.loginContainer}>
           <div css={s.header}>
-            <h1>Admin LogIn</h1>
+            <h1>DearMin LogIn</h1>
           </div>
           <div css={s.input}>
             <AuthPageInput

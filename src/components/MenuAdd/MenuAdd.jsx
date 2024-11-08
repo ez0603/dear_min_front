@@ -4,6 +4,7 @@ import ImageUpload from "../../components/ProductComponents/ImageUpload/ImageUpl
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { storage } from "../../apis/firebase/firebaseConfig";
 import useGetOption from "../../hooks/useGetOption";
+import { registerProductMaterial } from "../../apis/api/product";
 
 function MenuAdd({ categories, onAddProduct, optionTitles }) {
   const [productName, setProductName] = useState("");
@@ -13,7 +14,7 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
   const [productCount, setProductCount] = useState("");
   const [categoryId, setCategoryId] = useState(0);
   const [optionTitleId, setOptionTitleId] = useState(0);
-  const [optionId, setOptionId] = useState(0);
+  const [optionNameId, setOptionNameId] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [localFile, setLocalFile] = useState(null);
   const { option } = useGetOption(optionTitleId);
@@ -23,7 +24,6 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
 
   const handleImageUpload = async (file) => {
     setLocalFile(file);
-
     try {
       const storageRef = ref(storage, `products/${file.name}`);
       const uploadResult = await uploadBytes(storageRef, file);
@@ -36,7 +36,7 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
   };
 
   const handleOptionChange = (selectedId) => {
-    setOptionId(selectedId);
+    setOptionNameId(selectedId);
     const index = option.optionNameIds.indexOf(selectedId);
     if (index !== -1) {
       const price = option.optionPrices[index];
@@ -47,7 +47,6 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
 
   const handleQuantityChange = (newQuantity) => {
     setQuantity(newQuantity);
-
     if (selectedOptionPrice !== null && newQuantity > 0) {
       setDividedPrice(Math.floor(selectedOptionPrice / newQuantity));
     } else {
@@ -56,26 +55,24 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
   };
 
   const handleAddOption = () => {
-    if (optionId !== 0 && selectedOptionPrice !== null) {
+    if (optionNameId !== 0 && selectedOptionPrice !== null) {
       if (!quantity || quantity <= 0) {
         alert("수량을 입력해주세요.");
         return;
       }
-
       const optionName =
-        option.optionNames[option.optionNameIds.indexOf(optionId)];
+        option.optionNames[option.optionNameIds.indexOf(optionNameId)];
       setAddedOptions((prevOptions) => [
         ...prevOptions,
         {
-          id: optionId,
+          optionNameId,
           name: optionName,
           price: selectedOptionPrice,
           quantity,
           dividedPrice,
         },
       ]);
-
-      setOptionId(0);
+      setOptionNameId(0);
       setSelectedOptionPrice(null);
       setQuantity("");
       setDividedPrice(0);
@@ -83,19 +80,33 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
     }
   };
 
-  const handleAddProduct = () => {
+  const handleAddProduct = async (event) => {
+    event.preventDefault();
     const selectedCategory = categories.find((cat) => cat.value === categoryId);
     const categoryName = selectedCategory ? selectedCategory.label : "";
 
-    onAddProduct(
-      productName,
-      parseInt(productPrice, 10) || 0,
-      costPrice,
-      productImg,
-      parseInt(productCount, 10) || 0,
-      categoryId,
-      categoryName
-    );
+    const optionNameIds = addedOptions.map((opt) => opt.optionNameId);
+    const productQuantities = addedOptions.map((opt) => opt.quantity)
+    try {
+      const newProductId = await registerProductMaterial({
+        productReqDto: {
+          productName,
+          productPrice: parseInt(productPrice, 10) || 0,
+          costPrice,
+          productImg,
+          productCount: parseInt(productCount, 10) || 0,
+          categoryId,
+          categoryName,
+        },
+        optionNameIds,
+        productQuantities,
+      });
+      alert("Product and materials added successfully with ID: " + newProductId);
+      setAddedOptions([]);
+    } catch (error) {
+      console.error("Error registering product and materials:", error);
+      alert("Failed to register product and materials.");
+    }
   };
 
   return (
@@ -124,14 +135,13 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
           </option>
         ))}
       </select>
-
       {optionTitleId !== 0 &&
         option &&
         option.optionNameIds &&
         option.optionNames && (
           <div>
             <select
-              value={optionId}
+              value={optionNameId}
               onChange={(e) => handleOptionChange(parseInt(e.target.value, 10))}
             >
               <option value={0}>옵션 선택</option>
@@ -141,7 +151,6 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
                 </option>
               ))}
             </select>
-
             {selectedOptionPrice !== null && (
               <div>
                 <p>선택된 옵션 가격: {selectedOptionPrice} 원</p>
@@ -162,7 +171,6 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
             )}
           </div>
         )}
-
       <ul>
         {addedOptions.map((opt, index) => (
           <li key={index}>
@@ -171,9 +179,7 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
           </li>
         ))}
       </ul>
-
       <p>총 비용: {costPrice} 원</p>
-
       <ImageUpload
         initialImage={""}
         onImageUpload={handleImageUpload}
@@ -196,7 +202,9 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
           </option>
         ))}
       </select>
-      <button onClick={handleAddProduct}>추가</button>
+      <button type="button" onClick={handleAddProduct}>
+        추가
+      </button>
     </div>
   );
 }
