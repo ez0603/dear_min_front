@@ -51,7 +51,7 @@ function MobileSideBar({ isOpen, toggleSidebar }) {
                   {categories.map((category) => (
                     <li key={category.value} css={s.dropdownItem}>
                       <Link
-                        to={`/home?category=${category.value}`}
+                        to={`/admin/category/${category.value}`}
                         css={s.dropLink}
                         onClick={() => setActiveDropdown(null)}
                       >

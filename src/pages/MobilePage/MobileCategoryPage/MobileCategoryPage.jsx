@@ -1,40 +1,50 @@
-import { useParams } from "react-router-dom";
+/** @jsxImportSource @emotion/react */
+import * as s from "./style";
+import { useNavigate, useParams } from "react-router-dom";
 import useGetProducts from "../../../hooks/useGetProduct";
+import AdminPageLayout from "../../../components/PageComponents/AdminPageLayout/AdminPageLayout";
 
 function MobileCategoryPage(props) {
   const { categoryId } = useParams();
-  
-  // 1. 기본 확인
-  console.log("MobileCategoryPage Rendered");
-  console.log("categoryId from useParams:", categoryId); // 카테고리 ID가 제대로 나오는지 확인
+  const { products } = useGetProducts(categoryId);
+  const navigate = useNavigate();
 
-  const { products, error } = useGetProducts(categoryId);
+  console.log(products);
 
-  // 2. 제품 목록 및 오류 상태 확인
-  console.log("Fetched products:", products); // 가져온 제품 로그 출력
-  console.log("Error (if any):", error); // 에러가 발생했을 경우 로그 출력
-
-  if (error) {
-    return <div>Error loading products: {error.message}</div>;
-  }
+  const handleProductClick = (productId) => {
+    navigate(`/admin/product/${productId}`); 
+  };
 
   return (
-    <div>
-      <h2>Products in Category {categoryId}</h2>
-      <div>
-        {products.length === 0 ? (
-          <p>No products found for this category.</p>
-        ) : (
-          products.map((product) => (
-            <div key={product.id}>
-              <h3>{product.name}</h3>
-              <p>{product.description}</p>
-              <img src={product.image} alt={product.name} />
+    <AdminPageLayout>
+      <div css={s.layout}>
+        <div css={s.container}>
+          {products.length === 0 ? (
+            <p>상품이 존재하지 않습니다.</p>
+          ) : (
+            <div css={s.productLayout}>
+              <div css={s.productContain}>
+                {products.map((product) => (
+                  <div key={product.productId} css={s.productCard}>
+                    <div
+                      css={s.imageContainer}
+                      onClick={() => handleProductClick(product.productId)} 
+                    >
+                      <img src={product.productImg} alt={product.productName} />
+                      <p>수정하기</p>
+                    </div>
+                    <h1>{product.productName}</h1>
+                    <h2>{product.productPrice} 원</h2>
+                    <h3>단가 {product.costPrice} 원</h3>
+                    <h2>{product.productCount} 개</h2>
+                  </div>
+                ))}
+              </div>
             </div>
-          ))
-        )}
+          )}
+        </div>
       </div>
-    </div>
+    </AdminPageLayout>
   );
 }
 
