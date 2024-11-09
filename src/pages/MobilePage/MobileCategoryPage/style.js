@@ -7,6 +7,7 @@ export const layout = css`
   display: flex;
   align-items: center;
   justify-content: center;
+  margin-top: 100px;
   cursor: default;
 `;
 
@@ -30,62 +31,77 @@ export const productLayout = css`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 90%;
+  width: 100%;
   height: 100%;
 `;
 
 export const productContain = css`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-  gap: 50px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
   width: 90%;
-  padding: 0 30px;
+  padding-top: clamp(10px, 5vw, 15px);
   justify-items: center;
+`;
+
+export const searchContainer = css`
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  position: relative;
+  margin-bottom: clamp(10px, 10vw, 20px);
+`;
+
+export const searchIcon = css`
+  font-size: 1.5rem;
+  color: #333;
+  cursor: pointer;
+`;
+
+export const searchInputClosed = css`
+  width: 0;
+  opacity: 0;
+  padding: 8px;
+  font-size: clamp(14px, 5vw, 16px);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: width 0.3s ease, opacity 0.3s ease;
+  pointer-events: none;
+`;
+
+export const searchInputOpen = css`
+  width: 60%;
+  opacity: 1;
+  padding: 8px;
+  font-size: clamp(14px, 5vw, 16px);
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  transition: width 0.3s ease, opacity 0.3s ease;
 `;
 
 export const productCard = css`
   width: 100%;
-  max-width: 350px;
+  height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 20px;
   border-radius: 8px;
   text-align: center;
-
-  h1 {
-    margin: 5px 0;
-    font-size: clamp(20px, 3vw, 25px);
-  }
-
-  h2 {
-    margin: 7px 0;
-    font-size: clamp(15px, 3vw, 20px);
-  }
-
-  h3 {
-    margin: 5px 0;
-    font-size: clamp(8px, 3vw, 15px);
-  }
 `;
 
 export const imageContainer = css`
   position: relative;
   width: 100%;
+  height: 200px;
 
   img {
     width: 100%;
-    height: clamp(250px, 10vw, 350px);
-    border-radius: 8px;
+    height: 100%;
+    max-height: 200px;
     margin-bottom: 10px;
     transition: opacity 0.3s ease, filter 0.3s ease;
-
-    :hover {
-      cursor: pointer;
-      opacity: 0.8;
-      filter: brightness(50%);
-    }
   }
 
   p {
@@ -103,6 +119,46 @@ export const imageContainer = css`
   }
 
   :hover p {
+    opacity: 1;
+  }
+`;
+
+export const textBox = css`
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  text-align: left;
+
+  h1 {
+    margin: 10px 0 7px 0;
+    font-size: clamp(20px, 3vw, 24px);
+    font-weight: 500;
+  }
+
+  h2 {
+    margin: 5px 0;
+    font-size: clamp(14px, 3vw, 20px);
+    font-weight: 400;
+  }
+
+  h3 {
+    margin: 5px 0;
+    font-size: clamp(12px, 3vw, 16px);
+    font-weight: 300;
+  }
+`;
+
+export const scrollTopButton = css`
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  font-size: 2.5rem;
+  color: #252525;
+  cursor: pointer;
+  transition: opacity 0.3s ease;
+  opacity: 0.9;
+  &:hover {
     opacity: 1;
   }
 `;

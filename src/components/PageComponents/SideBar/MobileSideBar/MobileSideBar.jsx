@@ -53,7 +53,10 @@ function MobileSideBar({ isOpen, toggleSidebar }) {
                       <Link
                         to={`/admin/category/${category.value}`}
                         css={s.dropLink}
-                        onClick={() => setActiveDropdown(null)}
+                        onClick={() => {
+                          toggleSidebar(); 
+                          setActiveDropdown(null); 
+                        }}
                       >
                         {category.label}
                       </Link>
