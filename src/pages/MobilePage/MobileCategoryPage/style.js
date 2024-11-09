@@ -46,7 +46,6 @@ export const searchContainer = css`
 
 export const searchIcon = css`
   font-size: 1.5rem;
-  color: #333;
   cursor: pointer;
 `;
 

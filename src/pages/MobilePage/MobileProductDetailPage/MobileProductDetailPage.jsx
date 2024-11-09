@@ -17,7 +17,7 @@ import AdminPageLayout from "../../../components/PageComponents/AdminPageLayout/
 import useGetOption from "../../../hooks/useGetOption";
 import useOptionTitles from "../../../hooks/useOptionTitles";
 
-function DesktopProductDetailPage() {
+function MobileProductDetailPage(props) {
   const { productId } = useParams();
   const navigate = useNavigate();
   const { productDetail, isLoading } = useGetProductsDetail(productId);
@@ -123,7 +123,7 @@ function DesktopProductDetailPage() {
       await updateProduct(updatedProductData);
       await updateProductMaterial(productId, updatedProductMaterialData);
 
-      alert("상품이 업데이트 완료되었습니다.");
+      alert("상품 추가가 완료되었습니다.");
       setIsEditing(false);
     } catch (error) {
       alert("상품 및 자재 업데이트에 실패했습니다.");
@@ -211,6 +211,10 @@ function DesktopProductDetailPage() {
   return (
     <AdminPageLayout>
       <div css={s.layout}>
+        <button onClick={() => navigate(-1)} css={s.backButton}>
+          뒤로가기
+        </button>
+
         {productDetail ? (
           <>
             {!isEditing ? (
@@ -342,4 +346,4 @@ function DesktopProductDetailPage() {
   );
 }
 
-export default DesktopProductDetailPage;
+export default MobileProductDetailPage;
