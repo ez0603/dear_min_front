@@ -18,7 +18,7 @@ export const container = css`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: clamp(10px, 4vw, 30px) 0;
+  padding: clamp(10px, 3vw, 30px) 0;
   overflow: hidden;
   padding-bottom: 50px;
 
@@ -27,21 +27,12 @@ export const container = css`
   }
 `;
 
-export const productLayout = css`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-`;
-
-export const productContain = css`
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  width: 90%;
-  padding-top: clamp(10px, 5vw, 15px);
-  justify-items: center;
+export const categoryTitle = css`
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 10px;
+  text-align: center;
+  margin: 0 0 clamp(10px, 8vw, 20px) 0;
 `;
 
 export const searchContainer = css`
@@ -78,6 +69,23 @@ export const searchInputOpen = css`
   border: 1px solid #ccc;
   border-radius: 4px;
   transition: width 0.3s ease, opacity 0.3s ease;
+`;
+
+export const productLayout = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+`;
+
+export const productContain = css`
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  width: 90%;
+  padding-top: clamp(10px, 5vw, 15px);
+  justify-items: center;
 `;
 
 export const productCard = css`

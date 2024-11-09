@@ -3,9 +3,10 @@ import * as s from "./style";
 import { useNavigate, useParams } from "react-router-dom";
 import { useState, useRef, useEffect } from "react";
 import { FaSearch } from "react-icons/fa";
-import { IoArrowUpCircleSharp  } from "react-icons/io5"; // 아이콘 추가
+import { IoArrowUpCircleSharp } from "react-icons/io5"; // 아이콘 추가
 import useGetProducts from "../../../hooks/useGetProduct";
 import AdminPageLayout from "../../../components/PageComponents/AdminPageLayout/AdminPageLayout";
+import useCategories from "../../../hooks/useCategories";
 
 function MobileCategoryPage(props) {
   const { categoryId } = useParams();
@@ -15,6 +16,11 @@ function MobileCategoryPage(props) {
   const [showSearch, setShowSearch] = useState(false);
   const [showScrollButton, setShowScrollButton] = useState(false); // 스크롤 버튼 표시 여부
   const searchRef = useRef(null);
+  const categories = useCategories();
+
+  const currentCategory = categories.find(
+    (category) => category.value === Number(categoryId)
+  );
 
   const handleProductClick = (productId) => {
     navigate(`/admin/product/${productId}`);
@@ -58,6 +64,9 @@ function MobileCategoryPage(props) {
     <AdminPageLayout>
       <div css={s.layout}>
         <div css={s.container}>
+          <h2 css={s.categoryTitle}>
+            {currentCategory ? currentCategory.label : "카테고리 없음"}
+          </h2>
           <div css={s.searchContainer}>
             {!showSearch && (
               <FaSearch onClick={toggleSearchInput} css={s.searchIcon} />
@@ -97,7 +106,10 @@ function MobileCategoryPage(props) {
             </div>
           )}
           {showScrollButton && (
-            <IoArrowUpCircleSharp  css={s.scrollTopButton} onClick={scrollToTop} />
+            <IoArrowUpCircleSharp
+              css={s.scrollTopButton}
+              onClick={scrollToTop}
+            />
           )}
         </div>
       </div>
