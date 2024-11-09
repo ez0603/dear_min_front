@@ -36,6 +36,6 @@ export const productLayout = css`
 
   img {
     width: 30%;
-    height: 50%;
+    height: 40%;
   }
 `;

@@ -66,7 +66,6 @@ function DesktopProductDetailPage() {
         const categoryId = productDetail?.categoryId;
         navigate(`/admin/category/${categoryId}`);
       } catch (error) {
-        console.error("상품 삭제 실패", error);
         alert("상품 삭제에 실패했습니다.");
       }
     }
@@ -91,19 +90,18 @@ function DesktopProductDetailPage() {
 
   const handleSave = async () => {
     let updatedImageUrl = imageUrl;
-  
+
     if (localFile) {
       try {
         const storageRef = ref(storage, `products/${localFile.name}`);
         const uploadResult = await uploadBytes(storageRef, localFile);
         updatedImageUrl = await getDownloadURL(uploadResult.ref);
       } catch (error) {
-        console.error("Image upload failed", error);
-        alert("Image upload failed");
+        alert("이미지 업로드에 실패했습니다.");
         return;
       }
     }
-  
+
     const updatedProductData = {
       productId: parseInt(productId),
       productName: editValues.productName || "",
@@ -112,31 +110,23 @@ function DesktopProductDetailPage() {
       productCount: parseInt(editValues.productCount, 10) || 0,
       categoryId: selectedCategory?.value || productDetail.categoryId,
       productImg: updatedImageUrl || "",
+      categoryName: selectedCategory?.label || productDetail.categoryName,
     };
-  
+
     const updatedProductMaterialData = {
-      ...updatedProductData,
+      productReqDto: updatedProductData,
       optionNameIds: addedOptions.map((opt) => opt.optionNameId),
       productQuantities: addedOptions.map((opt) => opt.quantity),
     };
-  
+
     try {
-      // `updateProduct` API 호출
       await updateProduct(updatedProductData);
-  
-      // `updateProductMaterial` API 호출
-      await updateProductMaterial(updatedProductMaterialData);
-  
-      alert("Product and materials updated successfully");
+      await updateProductMaterial(productId, updatedProductMaterialData);
+
+      alert("상품 추가가 완료되었습니다.");
       setIsEditing(false);
     } catch (error) {
-      if (error.response) {
-        console.error("Error data:", error.response.data); // 서버에서 반환된 오류 메시지
-        alert(`Update failed: ${error.response.data.message || "Unknown error"}`);
-      } else {
-        console.error("Failed to update product or materials", error);
-        alert("Failed to update product or materials");
-      }
+      alert("상품 및 자재 업데이트에 실패했습니다.");
     }
   };
 
@@ -165,7 +155,7 @@ function DesktopProductDetailPage() {
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return <div>로딩 중...</div>;
   }
 
   const handleQuantityChange = (newQuantity) => {
@@ -186,20 +176,21 @@ function DesktopProductDetailPage() {
       const optionName =
         option.optionNames[option.optionNameIds.indexOf(optionNameId)];
 
-      setAddedOptions((prevOptions) => [
-        ...prevOptions,
-        {
-          optionNameId,
-          name: optionName,
-          price: selectedOptionPrice,
-          quantity,
-          dividedPrice,
-        },
-      ]);
+      setAddedOptions((prevOptions) => {
+        const newOptions = [
+          ...prevOptions,
+          {
+            optionNameId,
+            name: optionName,
+            price: selectedOptionPrice,
+            quantity,
+            dividedPrice,
+          },
+        ];
+        return newOptions;
+      });
 
-      // Update total cost
       setTotalCost((prevCost) => prevCost + dividedPrice);
-
       setOptionNameId(0);
       setSelectedOptionPrice(null);
       setQuantity("");
@@ -232,15 +223,15 @@ function DesktopProductDetailPage() {
                   alt={productDetail.productName}
                 />
                 <p>가격: {productDetail.productPrice} 원</p>
-                <p>단가: {totalCost} 원</p>
+                <p>카테고리: {productDetail.categoryName}</p>
+                <p>단가: {productDetail.costPrice} 원</p>
                 <p>수량: {productDetail.productCount} 개</p>
-                <p>Category: {productDetail.categoryName}</p>
               </div>
             ) : (
               <div css={s.editLayout}>
                 <div css={s.editButton}>
-                  <button onClick={handleSave}>Save</button>
-                  <button onClick={handleCancel}>Cancel</button>
+                  <button onClick={handleSave}>저장</button>
+                  <button onClick={handleCancel}>취소</button>
                 </div>
                 <h1>
                   <input
@@ -344,7 +335,7 @@ function DesktopProductDetailPage() {
             )}
           </>
         ) : (
-          <div>로딩중 ...</div>
+          <div>로딩 중...</div>
         )}
       </div>
     </AdminPageLayout>
