@@ -37,3 +37,10 @@ export const searchOptionRequest = async (optionTitleId) => {
 export const registerProductMaterial = async (data) => {
   return await instance.post("/product/material", data);
 };
+
+export const updateProductMaterial = async (productId) => {
+  return await instance.put(
+    `/product/material?productId=${productId}`,
+    productId
+  );
+};

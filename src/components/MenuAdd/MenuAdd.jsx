@@ -6,7 +6,7 @@ import { storage } from "../../apis/firebase/firebaseConfig";
 import useGetOption from "../../hooks/useGetOption";
 import { registerProductMaterial } from "../../apis/api/product";
 
-function MenuAdd({ categories, onAddProduct, optionTitles }) {
+function MenuAdd({ categories, optionTitles }) {
   const [productName, setProductName] = useState("");
   const [productPrice, setProductPrice] = useState("");
   const [costPrice, setCostPrice] = useState(0);
@@ -82,30 +82,42 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
 
   const handleAddProduct = async (event) => {
     event.preventDefault();
+
+    if (!productName || !productPrice || !costPrice || !productImg || !productCount || categoryId === 0) {
+      alert("모든 필수 필드를 입력해주세요.");
+      return;
+    }
+
+    if (isNaN(productPrice) || isNaN(productCount)) {
+      alert("가격과 수량에는 숫자만 입력해주세요.");
+      return;
+    }
+
     const selectedCategory = categories.find((cat) => cat.value === categoryId);
     const categoryName = selectedCategory ? selectedCategory.label : "";
 
     const optionNameIds = addedOptions.map((opt) => opt.optionNameId);
-    const productQuantities = addedOptions.map((opt) => opt.quantity)
+    const productQuantities = addedOptions.map((opt) => opt.quantity);
     try {
       const newProductId = await registerProductMaterial({
         productReqDto: {
           productName,
-          productPrice: parseInt(productPrice, 10) || 0,
+          productPrice: parseInt(productPrice, 10),
           costPrice,
           productImg,
-          productCount: parseInt(productCount, 10) || 0,
+          productCount: parseInt(productCount, 10),
           categoryId,
           categoryName,
         },
         optionNameIds,
         productQuantities,
       });
-      alert("Product and materials added successfully with ID: " + newProductId);
+      alert("상품이 추가되었습니다 ");
       setAddedOptions([]);
+      window.location.reload();
     } catch (error) {
       console.error("Error registering product and materials:", error);
-      alert("Failed to register product and materials.");
+      alert("상품이 등록되지 않았습니다. 오류: " + error.message);
     }
   };
 
@@ -122,7 +134,12 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
         type="number"
         placeholder="가격"
         value={productPrice}
-        onChange={(e) => setProductPrice(e.target.value)}
+        onChange={(e) => {
+          const value = e.target.value;
+          if (!isNaN(value)) setProductPrice(value);
+          else alert("가격에는 숫자만 입력해주세요.");
+        }}
+      
       />
       <select
         value={optionTitleId}
@@ -202,7 +219,7 @@ function MenuAdd({ categories, onAddProduct, optionTitles }) {
           </option>
         ))}
       </select>
-      <button type="button" onClick={handleAddProduct}>
+      <button onClick={handleAddProduct}>
         추가
       </button>
     </div>
